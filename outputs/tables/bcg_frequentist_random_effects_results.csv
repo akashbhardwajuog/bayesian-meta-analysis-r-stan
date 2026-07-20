@@ -1,0 +1,2 @@
+model,number_of_studies,pooled_log_odds_ratio,pooled_odds_ratio,confidence_interval_lower,confidence_interval_upper,p_value,tau_squared,i_squared_percent
+Frequentist random-effects meta-analysis (REML),13,-0.7451777718370632,0.4746499130523234,0.3296295647244906,0.6834718850200259,6.182600078620036e-5,0.3377720450772514,92.07269155181164

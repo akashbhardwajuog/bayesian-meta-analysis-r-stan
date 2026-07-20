@@ -1,0 +1,3 @@
+approach,pooled_odds_ratio,interval_lower,interval_upper,interval_type,heterogeneity_measure
+Frequentist random-effects meta-analysis (REML),0.4746499130523234,0.3296295647244906,0.6834718850200259,95% confidence interval,Tau-squared = 0.338; I-squared = 92.1%
+Bayesian random-effects meta-analysis (Stan),0.48842968870875,0.31497509575000004,0.71695912025,95% credible interval,Posterior mean tau = 0.641

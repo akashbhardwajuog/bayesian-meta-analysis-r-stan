@@ -1,0 +1,13 @@
+```gitignore 
+.Rproj.user/ 
+.Rhistory 
+.RData 
+.Ruserdata 
+ 
+data_processed/bcg_bayesian_meta_fit.rds 
+ 
+# CmdStan model compilation output 
+models/*.exe 
+models/*.hpp 
+models/*.d 
+

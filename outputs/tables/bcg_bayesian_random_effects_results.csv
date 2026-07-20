@@ -1,0 +1,4 @@
+parameter,posterior_mean,posterior_median,credible_interval_lower,credible_interval_upper
+Pooled log odds ratio,-0.737736792738985,-0.7372446450000001,-1.1552617375,-0.3327364475
+Pooled odds ratio,0.48842968870875,0.47843035,0.31497509575000004,0.71695912025
+Between-study heterogeneity (tau),0.64105136581375,0.61427856,0.37324378875,1.0624254775

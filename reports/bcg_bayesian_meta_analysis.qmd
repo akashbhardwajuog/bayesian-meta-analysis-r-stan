@@ -1,0 +1,163 @@
+--- 
+title: "Bayesian Random-Effects Meta-Analysis of Published BCG Vaccine Studies" 
+author: "Akash Bhardwaj" 
+date: today 
+ 
+format: 
+ html: 
+   toc: true 
+   toc-depth: 2 
+   theme: cosmo 
+   embed-resources: true 
+ 
+execute: 
+ echo: false 
+ warning: false 
+ message: false 
+--- 
+ 
+## Project objective 
+ 
+This educational project compares frequentist and Bayesian random-effects meta-analysis using published aggregate data from historic studies of BCG vaccination and tuberculosis cases. 
+ 
+The workflow calculates study-level odds ratios, estimates pooled associations and between-study heterogeneity, assesses study influence, fits a Bayesian hierarchical model in Stan, and compares frequentist confidence intervals with Bayesian credible intervals. 
+ 
+## Dataset 
+ 
+The analysis used the `dat.colditz1994` dataset distributed through the R package `metadat`. 
+ 
+The dataset contains 13 historic published studies with aggregate 2×2 event data: 
+ 
+- tuberculosis cases in BCG-vaccinated groups; 
+- participants without tuberculosis in BCG-vaccinated groups; 
+- tuberculosis cases in control groups; 
+- participants without tuberculosis in control groups. 
+ 
+This is an educational re-analysis of historic published aggregate data. It is not a new systematic review, treatment recommendation, regulatory submission, or health technology assessment. 
+ 
+## Study-level effect sizes 
+ 
+Odds ratios were calculated for each study. 
+ 
+An odds ratio below 1 indicates lower odds of tuberculosis cases in the BCG-vaccinated group relative to the control group within that study. 
+ 
+## Frequentist random-effects meta-analysis 
+ 
+A random-effects meta-analysis was fitted using restricted maximum likelihood (REML). 
+ 
+- Studies included: 13 
+- Pooled odds ratio: 0.475 
+- 95% confidence interval: 0.330 to 0.683 
+- Between-study variance, tau-squared: 0.338 
+- I-squared: 92.1% 
+ 
+### Forest plot 
+ 
+![](../outputs/figures/bcg_frequentist_forest_plot.png) 
+ 
+The pooled frequentist estimate was below 1. However, heterogeneity was high, indicating substantial variation in the study-specific estimates. 
+ 
+## Heterogeneity and influence diagnostics 
+ 
+Cochran's Q statistic was 163.0 with 12 degrees of freedom, with a very small p-value. This was consistent with substantial heterogeneity across studies. 
+ 
+### Baujat plot 
+ 
+![](../outputs/figures/bcg_baujat_plot.png) 
+ 
+The Baujat plot showed that Study 8 (TPT Madras, 1980) had the strongest combined contribution to heterogeneity and influence on the pooled estimate. Study 4 (Hart and Sutherland, 1977) was also relatively influential. 
+ 
+No studies were excluded solely because of these diagnostics. 
+ 
+Leave-one-out analysis showed that the pooled odds ratio remained below 1 when each study was omitted in turn. Therefore, no individual study alone determined the direction of the pooled association. 
+ 
+## Bayesian random-effects meta-analysis 
+ 
+A Bayesian hierarchical random-effects model was fitted in Stan using four Markov chain Monte Carlo chains. 
+ 
+The model estimated: 
+ 
+- `mu`: pooled log odds ratio; 
+- `tau`: between-study standard deviation on the log odds-ratio scale; 
+- study-specific underlying effects. 
+ 
+The priors were: 
+ 
+```text 
+mu ~ Normal(0, 2) 
+tau ~ Half-Normal(0, 1) 
+```
+### MCMC diagnostics 
+ 
+All four chains completed successfully. 
+ 
+- R-hat values were 1.00 for the pooled effect and heterogeneity parameters. 
+- Effective sample sizes were high. 
+- No divergent-transition warnings were reported. 
+ 
+These diagnostics support convergence for this model run. 
+ 
+### Bayesian pooled effect 
+ 
+- Posterior mean pooled odds ratio: 0.488 
+- 95% credible interval: 0.315 to 0.717 
+- Posterior mean tau: 0.641 
+- 95% credible interval for tau: 0.373 to 1.06 
+ 
+### Posterior distribution of pooled odds ratio 
+ 
+![](../outputs/figures/bcg_bayesian_pooled_odds_ratio_posterior.png) 
+ 
+The posterior distribution is concentrated below an odds ratio of 1. Under the specified model and priors, it supports lower odds of tuberculosis cases in BCG-vaccinated groups than in control groups in these historic data. 
+ 
+### Posterior distribution of heterogeneity 
+ 
+![](../outputs/figures/bcg_bayesian_tau_posterior.png) 
+ 
+The posterior distribution of tau indicates substantial uncertainty and variation in underlying study effects. 
+ 
+## Frequentist and Bayesian comparison 
+ 
+| Method | Pooled odds ratio | Uncertainty interval | 
+|---|---:|---| 
+| Frequentist random-effects meta-analysis (REML) | 0.475 | 95% confidence interval: 0.330 to 0.683 | 
+| Bayesian random-effects meta-analysis (Stan) | 0.488 | 95% credible interval: 0.315 to 0.717 | 
+ 
+The frequentist and Bayesian estimates were similar. Both approaches estimated a pooled odds ratio below 1, while also indicating substantial between-study heterogeneity. 
+ 
+## Reproducibility 
+ 
+Run the R scripts in this order: 
+ 
+```text 
+scripts/01_install_packages.R 
+scripts/02_load_bcg_data.R 
+scripts/03_frequentist_random_effects_meta_analysis.R 
+scripts/04_heterogeneity_and_influence_checks.R 
+scripts/05_install_cmdstanr.R 
+scripts/06_bayesian_random_effects_meta_analysis.R 
+scripts/07_bayesian_visualisations_and_model_comparison.R 
+``` 
+ 
+The Stan model is located at: 
+ 
+```text 
+models/bayesian_random_effects_meta_analysis.stan 
+``` 
+ 
+## Limitations 
+ 
+- This project uses historic published aggregate data from 13 studies. 
+- It is not a systematic review with a prospectively registered protocol. 
+- Study-level aggregate data do not allow patient-level adjustment. 
+- High heterogeneity limits interpretation of a single pooled estimate. 
+- The Bayesian results depend on the specified model structure and prior distributions. 
+- The analysis does not assess study quality, publication bias, current BCG policy, current tuberculosis epidemiology, or clinical applicability. 
+- Results are educational and must not be used for clinical or public-health decision-making. 
+ 
+## Conclusion 
+ 
+This project demonstrates frequentist and Bayesian random-effects meta-analysis in R and Stan. 
+ 
+The frequentist and Bayesian models produced similar pooled odds-ratio estimates while highlighting substantial between-study heterogeneity. The project demonstrates evidence synthesis, uncertainty communication, heterogeneity assessment, Bayesian hierarchical modelling, and reproducible reporting. 
+ 
