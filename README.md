@@ -1,21 +1,3 @@
-The Project 7 Quarto report now looks complete and professional.
-
-It correctly includes:
-
-- Forest plot
-- Heterogeneity and Baujat diagnostics
-- Bayesian model description and priors
-- MCMC diagnostics
-- Posterior pooled-odds-ratio plot
-- Posterior heterogeneity (`tau`) plot
-- Frequentist versus Bayesian comparison table
-- Reproducibility instructions
-- Limitations and conclusion
-
-## Next: finalise the Project 7 README
-
-Open `README.md` in the main Project 7 folder and replace it with this:
-
 ```markdown
 # Bayesian Random-Effects Meta-Analysis of Published BCG Vaccine Studies in R and Stan
 
