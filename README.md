@@ -1,4 +1,4 @@
-```markdown
+
 # Bayesian Random-Effects Meta-Analysis of Published BCG Vaccine Studies in R and Stan
 
 ## Project objective
